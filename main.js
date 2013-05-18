@@ -58,7 +58,7 @@
 					type="rotten";
 					color="green";
 				}
-				$("span.year").after("<span id=\"rottenDiv\"><img width='25px' src='"+ (getImageUrl(type)) +"'/>"+msg2.score+"%</span>")
+				$("span.year").after("<span id=\"rottenDiv\" dir=\"ltr\"><img width='25px' src='"+ (getImageUrl(type)) +"'/>"+msg2.score+"%</span>")
 				$("#rottenDiv").css({
 				"margin-left": "10px",
 				"font-size":"25px",
