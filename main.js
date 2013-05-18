@@ -25,8 +25,12 @@
 				"color":"#136cb2" //blue
 				});
 			}
-			else
+			else 
 			{
+				if(msg.rating==null)
+				{
+					msg.rating="N/A";
+				}
 				type="imdb";			
 				$("div.rating_wrap.clearbox").before("<div style=\"font-size:19px;font-weight:blod;width:70px;height:28px;padding-left:52px;padding-top:0px; background-image:url("+ (getImageUrl(type)) +");\"><div>"+msg.rating+"</div></div>");		
 			}
