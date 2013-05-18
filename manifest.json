@@ -1,0 +1,14 @@
+{
+   "manifest_version": 2,	  
+   "name": "Douban IMDb Viewer",
+   "description": "IMDb and Rottentomatoes ratings for movie.douban",
+   "content_scripts": [
+    {
+      "matches": ["http://movie.douban.com/subject/*"],
+      "js": ["jquery-1.9.1.min.js", "main.js"]
+    }
+  ],
+   "permissions": [ "http://movie.douban.com/subject/*"],
+   "version": "1.5",
+   "web_accessible_resources": [ "image/fresh.png", "image/rotten.png", "image/none.png" ,"image/imdb.png"]
+}
