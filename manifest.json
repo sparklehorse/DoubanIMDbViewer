@@ -9,6 +9,6 @@
     }
   ],
    "permissions": [ "http://movie.douban.com/subject/*"],
-   "version": "1.5",
-   "web_accessible_resources": [ "image/fresh.png", "image/rotten.png", "image/none.png" ,"image/imdb.png"]
+   "version": "1.8",
+   "web_accessible_resources": [ "image/fresh.png", "image/rotten.png", "image/none.png" ,"image/imdb.png","image/loading.gif"]
 }

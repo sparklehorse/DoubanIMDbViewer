@@ -1,8 +1,42 @@
-function getImageUrl(type) {
-	return chrome.extension.getURL("image/" + type + ".png");
-	};
+function getImageUrl(type)
+{
+	if(type=="loading")
+	{
+		return chrome.extension.getURL("image/" + type + ".gif");
+	}
+	else return chrome.extension.getURL("image/" + type + ".png");
+};
+
 (function()
 {	
+	//imdbDiv css
+	var imdbDivStyle={
+	"font-size":"19px",
+	"font-weight":"blod",
+	"width":"70px",
+	"height":"28px",
+	"padding-left":"52px",
+	"padding-top":"0px"			
+	};
+	//topDiv css				
+	var topDivStyle={
+	"font-size":"19px",
+	"font-weight": "bold",
+	//"color":"#70579d" //purple
+	"color":"#136cb2" //blue
+	};
+	
+	type="loading";		
+	if($("span.year").length>0)//title have a year label
+	{
+		$("span.year").after("<span id=\"rottenDiv\" dir=\"ltr\"><img id=\"rottenImg\" style='margin: 0px 30px' src='"+ (getImageUrl(type)) +"'/</span>");
+	}
+	else//title doesn't have a year label
+	{
+		$("h1>span").after("<span id=\"rottenDiv\" dir=\"ltr\"><img id=\"rottenImg\" src='"+ (getImageUrl(type)) +"'/></span>");
+	}
+
+	$("div.rating_wrap.clearbox").before("<div id=\"imdbDiv\" style=\"width:122px;height:28px;background-repeat:no-repeat;background-position:center;background-image:url("+ (getImageUrl(type)) +");\"><div id=\"rating\"></div></div>");
 	var info=document.getElementById("info").innerHTML;
 	var pattern=/tt\d{7}/g;//tt1234567
 	id=pattern.exec(info);//get imdb id
@@ -14,15 +48,14 @@ function getImageUrl(type) {
             success: function(msg){//get object
 				if(msg.rank!=null)//top 250
 				{
+					//rating
 					type="imdb";
-					$("div.rating_wrap.clearbox").before("<div id=\"imdbDiv\" style=\"font-size:19px;font-weight:blod;width:70px;height:28px;padding-left:52px;padding-top:0px; background-image:url("+ (getImageUrl(type)) +");\"><div>"+msg.rating+"</div></div>");
+					$("#rating").html(msg.rating);
+					$("#imdbDiv").css(imdbDivStyle);
+					$("#imdbDiv").css({"background-image":"url("+ (getImageUrl(type)) +")"});
+					//rank
 					$("#imdbDiv").before("<div id=\"topDiv\">"+msg.rank+"</div>");
-					$("#topDiv").css({
-					"font-size":"19px",
-					"font-weight": "bold",
-					//"color":"#70579d" //purple
-					"color":"#136cb2" //blue
-					});
+					$("#topDiv").css(topDivStyle);
 				}
 				else //server maybe error
 				{	/*			
@@ -64,13 +97,17 @@ function getImageUrl(type) {
 								msg.rating="N/A";
 							}
 							type="imdb";			
-							$("div.rating_wrap.clearbox").before("<div style=\"font-size:19px;font-weight:blod;width:70px;height:28px;padding-left:52px;padding-top:0px; background-image:url("+ (getImageUrl(type)) +");\"><div>"+msg.rating+"</div></div>");
+							$("#rating").html(msg.rating);
+							$("#imdbDiv").css(imdbDivStyle);
+							$("#imdbDiv").css({"background-image":"url("+ (getImageUrl(type)) +")"});
 						});
 					}
 					else//api have a rating
 					{
-						type="imdb";			
-						$("div.rating_wrap.clearbox").before("<div style=\"font-size:19px;font-weight:blod;width:70px;height:28px;padding-left:52px;padding-top:0px; background-image:url("+ (getImageUrl(type)) +");\"><div>"+msg.rating+"</div></div>");	
+						type="imdb";				
+						$("#rating").html(msg.rating);
+						$("#imdbDiv").css(imdbDivStyle);
+						$("#imdbDiv").css({"background-image":"url("+ (getImageUrl(type)) +")"});
 					}						
 				}				
 			}
@@ -96,15 +133,7 @@ function getImageUrl(type) {
 					type="rotten";
 					color="green";
 				}
-				if($("span.year").length>0)//title have a year label
-				{
-					$("span.year").after("<span id=\"rottenDiv\" dir=\"ltr\"><img width='25px' src='"+ (getImageUrl(type)) +"'/>"+msg2.score+"%</span>");
-				}
-				else//title doesn't have a year label
-				{
-					$("h1>span").after("<span id=\"rottenDiv\" dir=\"ltr\"><img width='25px' src='"+ (getImageUrl(type)) +"'/>"+msg2.score+"%</span>");
-				}
-				
+				$("#rottenDiv").html("<img width='25px' src='"+ (getImageUrl(type)) +"'/>"+msg2.score+"%");
 				$("#rottenDiv").css({
 				"margin-left": "10px",
 				"font-size":"25px",
@@ -112,9 +141,7 @@ function getImageUrl(type) {
 				"color":color
 				});
             }
-        }); 
-		
+        }); 		
 	}
-	else return;	
-	
+	else return;		
 })();
