@@ -15,6 +15,7 @@ function getImageUrl(type)
 		if(url=="")
 		{
 			$("body").removeAttr("style");
+			window.localStorage.setItem("url","");
 		}
 		else
 		{
@@ -37,7 +38,6 @@ function getImageUrl(type)
 		});
 	}
 		
-
 	//imdbDiv css
 	var imdbDivStyle={
 	"font-size":"19px",
@@ -56,9 +56,9 @@ function getImageUrl(type)
 	};
 	
 
-	if($("#info").length>0)
+	if($("#full-info").length>0)
 	{
-		var info=document.getElementById("info").innerHTML;
+		var info=document.getElementById("full-info").innerHTML;
 		var pattern=/tt\d{7}/g;//tt1234567
 		id=pattern.exec(info);//get imdb id
 		if(id!=null)
@@ -72,7 +72,7 @@ function getImageUrl(type)
 			{
 				$("h1>span").after("<span id=\"rottenDiv\" dir=\"ltr\"><img id=\"rottenImg\" src='"+ (getImageUrl(type)) +"'/></span>");
 			}
-			$("div.rating_wrap.clearbox").before("<div id=\"imdbDiv\" style=\"width:122px;height:28px;background-repeat:no-repeat;background-position:center;background-image:url("+ (getImageUrl(type)) +");\"><div id=\"rating\"></div></div>");
+			$("div.movie-rating").before("<div id=\"imdbDiv\" style=\"width:122px;height:28px;background-repeat:no-repeat;background-position:center;background-image:url("+ (getImageUrl(type)) +");\"><div id=\"rating\"></div></div>");
 			$.ajax({
 				type: "GET",
 				url: "http://imdbapi.notimportant.org/imdb/"+id,
