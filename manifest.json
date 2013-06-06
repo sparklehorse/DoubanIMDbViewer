@@ -4,11 +4,16 @@
    "description": "IMDb and Rottentomatoes ratings for movie.douban",
    "content_scripts": [
     {
-      "matches": ["http://movie.douban.com/subject/*"],
+      "matches": ["http://*.douban.com/*"],
       "js": ["jquery-1.9.1.min.js", "main.js"]
     }
   ],
-   "permissions": [ "http://movie.douban.com/subject/*"],
-   "version": "1.8",
+   "browser_action": {  
+    "default_icon": "image/icon.png" ,
+    "default_title": "Set My Background",
+    "default_popup": "popup.html"
+  },  
+   "permissions": [ "tabs"],
+   "version": "2.0",
    "web_accessible_resources": [ "image/fresh.png", "image/rotten.png", "image/none.png" ,"image/imdb.png","image/loading.gif"]
 }
